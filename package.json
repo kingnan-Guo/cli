@@ -1,0 +1,26 @@
+{
+  "name": "kingnan-cli",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "bin": "./bin/index.js",
+  "type": "module",
+  "files": [
+    "bin",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "rm": "rm -rf ./k && node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "ejs": "^3.1.9",
+    "execa": "^8.0.1",
+    "inquirer": "^9.2.11",
+    "prettier": "^3.0.3"
+  }
+}
