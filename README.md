@@ -1,2 +1,2 @@
 # cli
-kingnan-cli
+cd-cli
