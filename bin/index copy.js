@@ -11,38 +11,18 @@ import { config } from "process";
 import { NodeSSH } from "node-ssh";
 import path from "path";
 import { fileURLToPath } from "url";
-import readline from "readline";
-// import { Client } from "ssh2";
+import { Client } from "ssh2";
 
 const answers = await question();
 
 console.log("answers ", answers);
 const ssh = new NodeSSH()
 
-// const conn = new Client();
 
-
-
-// conn.on('ready', () => {
-//     console.log('Client :: ready');
-//     //执行uptime
-//     conn.exec('uptime', (err, stream) => {
-//       if (err) throw err;
-//       stream.on('close', (code, signal) => {
-//         console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
-//         conn.end();
-//       }).on('data', (data) => {
-//         //监听数据
-//         console.log('STDOUT: ' + data);
-//       }).stderr.on('data', (data) => {
-//         console.log('STDERR: ' + data);
-//       });
-//     });
-//   })
 
 
 const sshConnet  = await ssh.connect({
-    host: 'linux-2.local',
+    host: 'linux.local',
     username: 'root',
     password: 'G14789gyn'
     // privateKeyPath: '/home/steel/.ssh/id_rsa'
@@ -50,74 +30,26 @@ const sshConnet  = await ssh.connect({
 // console.log("sshConnet =", sshConnet);
 
 const __dirname = fileURLToPath(import.meta.url)
-// const fileNamePath = path.resolve(__dirname, "../path/fileName.txt")
-const fileNamePath = path.resolve(__dirname, "../path/fileName.sh")
-// const fileNamePathZip = path.resolve(__dirname, "../path/fileName.txt.zip")
-const DonePath = '/home/parallels/Downloads/fileName.sh'
-// const DonePath = '/home/parallels/Downloads/fileName.txt.zip'
-ssh.putFile(fileNamePath, DonePath).then(function() {
+const fileNamePath = path.resolve(__dirname, "../path/fileName.txt")
+
+
+ssh.putFile(fileNamePath, '/mnt/fileName').then(function() {
     console.log("The File thing is done")
-
-    // ssh.execCommand('ls', { cwd: '/home/parallels/Downloads/'}).then
-    ssh.execCommand('sh ./fileName.sh', { cwd: '/home/parallels/Downloads/' }).then((result) => {
-        console.log(result.stdout);
-        if (!result.stderr) {
-          console.log('Gratefule! update success!');
-          process.exit(0);
-        } else {
-          console.log('Something wrong:', result);
-          process.exit(0);
-        }
-    });
-
-    // ssh.connect({
-    //   host: 'linux-2.local',
-    //   username: 'parallels',
-    //   password: 'G14789gyn'
-    // }).then((res) => {
-    //   ssh.execCommand('whoami', { cwd: '/root' }).then((res) => {
-    //     console.log("parallels res", res);
-    //   })
-    // })
-
 }, function(error) {
     console.log("Something's wrong")
     console.log(error)
 })
 
 
-// ssh.execCommand('cd /mnt').then((res) => {
+ssh.exec('ls').then((res) => {
+    console.log("res =", res);
+})
+
+// ssh.execCommand('cwd /opt').then((res) => {
 //     console.log("res =", res);
 // })
-
-// ssh.execCommand('ls', { cwd: '/home/parallels/Downloads/' }).then((res) => {
-//     console.log(res.stdout);
-//     // ssh.execCommand('ls').then((res) => {
-//     //     console.log("ls res =", res);
-//     // })
-// })
-
-
-
-
-// const rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout,
-// });
-// rl.question("What is the host? ", (host) => {
-//     console.log(host);
-// })
-
-
-
 // ssh.requestShell()
 
-
-
-
-// async function runCommand(command, webDir) {
-//     await ssh.execCommand(command, { cwd: webDir });
-// }
 
 
 
